@@ -1,0 +1,8 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {chapter}{\numberline {2}Theoretical Concepts}{2}{chapter.2}
+\contentsline {chapter}{\numberline {3}Implementation}{3}{chapter.3}
+\contentsline {chapter}{\numberline {4}Results \& Discussion}{4}{chapter.4}
+\contentsline {section}{\numberline {4.1}Defining Parameters}{4}{section.4.1}
+\contentsline {section}{\numberline {4.2}Performance}{4}{section.4.2}
+\contentsline {section}{\numberline {4.3}MNIST Database}{4}{section.4.3}
+\contentsline {chapter}{\numberline {5}Outlook}{5}{chapter.5}

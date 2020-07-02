@@ -1,0 +1,19 @@
+% This function checks if the input parameters define a valid FFN and stores them in a structure.
+% The function needs at least 3 input integers defining the size of each layer [inputlayer, outputlayer, hiddenlayer1, ...]. 
+function [model] = ffnetwork(input, output, varargin)
+
+% Input testing
+assert(nargin >=3, 'To define a ffnetwork you need at lest 3 input arguments (integers). 1 for the input and 1 for the output layer and at least 1 hidden layer')
+
+assert(input==floor(input) && output==floor(output), "Input arguments have to be integers")
+len = size(varargin);
+for ii = 1:len(2)
+    assert(cell2mat(varargin(1,ii))==floor(cell2mat(varargin(1,ii))), "Input arguments have to be integers")
+end
+
+% building the structure
+model.input = input;
+model.output = output;
+model.hidden = cell2mat(varargin);
+end
+

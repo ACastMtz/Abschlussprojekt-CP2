@@ -1,0 +1,46 @@
+\section{Sigmoid Neurons}\label{sigNeuron}
+The building blocks of every neural network are, evidently, the neurons. Each neuron is in charge of processing information, to do so it has individual weights for each input going into the neuron and a threshold for the activation of the neuron, the bias. The output, i.e. the activation value of the neuron, depends on how these two parameters were defined.\\
+A very simple type of neuron is called a perceptron which uses a step function as the activation function for the neuron, that is, given a binary input it prompts a binary output as well; hence, networks of perceptrons can be used to compute any logical function. However, if the in-going information is not only 1's and 0's but the values lie somewhere in between the network will not process the information adequately. One way to obviate this issue is to choose a different activation function, the sigmoid function:
+\begin{equation}
+    \sigma(z) = \frac{1}{1 + exp(- \sum_j w_j x_j -b)}
+\end{equation}
+
+Where the $x_j$ are the inputs, $w_j$ their respective weights and $b$ the biases of each neuron; the quantity $z =\sum_j w_jx_j - b$ is called a weighted input. Due to the nature of the sigmoid function, a subtle alteration of the parameters causes only a small corresponding change in the output from the network, which allows the learning to be possible by carefully tailoring the weights and/or biases to match the network's output to the desired output.
+ 
+\section{Designing a Neural Network}\label{designNN}
+
+A neural network (NN) consists primordially of an input layer, an output layer and one or several intermediate layers called hidden layers.\\
+The number of sigmoid neurons in the input layer is equal to the number of inputs in a sample of information, in the case of image recognition by sampling the MNIST database, there are 784 pixels in one image so the network needs 784 input neurons where each grayscale value for each pixel is stored. In the output layer there are, consequently, 10 neurons (one for each digit from 0 to 9). One essential aspect of designing a neural network is figuring out the appropriate number of hidden layers and the size - number of hidden neurons- of each layer. Please note that exaggerating about the size and number of hidden layers does not necessarily elicit a better trained network, all along greatly costing valuable computational resources.
+
+\subsection*{Feedforward NN}\label{feedforwardNN}
+
+ In a feedforward NN the output of a layer is the input of the next one, so the information is just fed in one direction: from the leftmost (input layer) to the rightmost layer (output layer); there are no loops allowed.
+
+\section{Backpropagation}\label{backpTheo}
+
+The Backpropagation algorithm is an algorithm that can be used to optimize the learning process of the network. It does so by finding out the values by which the weights and biases have to be changed, in order to achieve a higher accuracy of the network's goal. The main concepts used are: a cost function and its gradient.
+
+\subsection{Cost Function}\label{costFuncTheo}
+
+The cost function establishes quantitatively how well the network is classifying the inputs. For this network, the quadratic cost function (otherwise known as the mean squared error, MSE) was chosen:
+\begin{equation}
+    C(w,b) = \frac{1}{2 n} \sum^n_x \mid \mid y(x) - a \mid \mid ^2
+\end{equation}
+Where $w,b$ denote the weights and biases respectively, $n$ is the total number of training inputs, $a$ is the vector of output values (activation values) for each input $x$. Minimizing the cost as a function of the weights and biases is the main idea behind a training algorithm, like backpropagation.
+
+\subsection{Gradient Descent}\label{gradDescTheo}
+
+When discussing minimization problems, the gradient descent algorithm proposes a nice and effective way to solve them. In this particular case, the algorithm will determine the set of these two parameters which minimize the cost function.\\
+The idea is to compute the gradient of the cost function -to see the influence of each weight and bias- and then adjust the weights and biases accordingly, that is, decrease their value by a small positive amount so that they "move" down the slope of the cost function until they reach a global minimum. To be laconic, gradient descent is a method where each new step is taken in the direction which does most to immediately decrease the cost function. This is another reason why the MSE function was selected as the cost function, because it is a smooth well-behaved function that allows to easily find the best adjustment over the weights and biases for the improvement of the network. The euqations are defined as
+\begin{equation}
+    w \rightarrow w' = w -\eta \frac{\partial C }{\partial w} 
+\end{equation}
+\begin{equation}
+    b \rightarrow b' = b -\eta \frac{\partial C }{\partial b} 
+\end{equation}
+
+With $\nabla = (\frac{\partial C }{\partial w}  , \frac{\partial C }{\partial b} )$ the gradient of the cost function; $w$, $w'$, $b$ and $b'$ the old and new weights and biases respectively; and $\eta$ the learning rate, which should be a small positive integer. 
+
+\subsection{Stochastic Gradient Descent}\label{SGDtheo}
+
+In a large network calculating the gradient of the cost function for each weight and bias implies a proportionally large computational cost. A good segue to avert this situation, is to use an algorithm called stochastic gradient descent (SGD) to expedite the computation. The idea is to divide an entire data-set into batches and estimate the gradient for each one of them. Averaging over the number of batches, the value of the gradient per batch is roughly equal to the gradient of the whole data-set, provided the size of each batch is large enough. In this way, the learning process is speed up, while obtaining a good estimate of the true gradient.  

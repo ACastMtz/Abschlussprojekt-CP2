@@ -1,0 +1,50 @@
+%% This Script is for testing the gradient descent of the network/ the backprop function
+
+% set up a simple network
+activationFunction = activation(@sig,@sigDerivativ);
+eta = 5; % defines how 'fast' the network learns
+batchSize = 10;% defines the batch size of the stochastic gradient descent
+model = ffNetwork(activationFunction,eta,batchSize,20,10,30);
+
+%initialize random weights and baises
+modelParams1.model = model;
+[modelParams1.weights, modelParams1.biases] = initialize(model);
+modelParamsV.model = model;
+[modelParamsV.weights, modelParamsV.biases] = initialize(model);
+modelParams2.model = model;
+
+epsilon = 0.0001;
+
+for ii = 1:length(modelParamsV.weights)
+    modelParams2.weights{ii} = modelParamsV.weights{ii}.*epsilon + modelParams1.weights{ii};
+    modelParams2.biases{ii} = modelParamsV.biases{ii}.*epsilon + modelParams1.biases{ii};
+end
+
+randomInput = randi([0 9],1,20);
+randomLabel = randi([0 9],1,1);
+mapResults = 0:9;
+
+
+%calculate the gradient with backprop
+[deltaGradWeights, deltaGradBiases] = backprop(modelParams1,randomInput, randomLabel);
+
+%calculate f(x)
+[~,~,activatedOutput1] = evaluate(modelParams1, randomInput, randomLabel, mapResults);
+[~,~,activatedOutput2] = evaluate(modelParams2, randomInput, randomLabel, mapResults);
+desiredOutput = zeros(modelParams.model.output,1);
+desiredOutput(randomLabel+1) = 1;
+f1 = cost(desiredOutput, activatedOutput1{3});
+f2= cost(desiredOutput, activatedOutput2{3});
+
+sumsum;
+for ii = 1:length(modelParamsV.weights)
+   sumsum = sum(sum((modelParamsV.weights{ii}.*epsilon) .* deltaGradWeights{ii})) ;
+    sumsum = sum(sum((modelParamsV.biases{ii}.*epsilon) .* deltaGradBiases{ii}));
+end
+
+%condition to test
+
+
+result = (f2-f1)/epsilon - sum(activatedOutputDerivativ{end})
+
+
